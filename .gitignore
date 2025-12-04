@@ -1,0 +1,69 @@
+# ============================
+# Java / Maven Build
+# ============================
+target/
+logs/
+*.log
+
+# ============================
+# Java / Class Files
+# ============================
+*.class
+
+# ============================
+# IntelliJ IDEA
+# ============================
+.idea/
+*.iml
+out/
+
+# ============================
+# VS Code
+# ============================
+.vscode/
+
+# ============================
+# Eclipse
+# ============================
+.project
+.classpath
+.settings/
+
+# ============================
+# OS Files
+# ============================
+# macOS
+.DS_Store
+
+# Linux Trash files
+.Trash-*
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# ============================
+# Maven backup files
+# ============================
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+
+# ============================
+# JavaFX Cache / Run Artifacts
+# ============================
+*.war
+*.jar
+*.swp
+*.swo
+
+# ============================
+# Ignore local environment config
+# ============================
+.env
+*.local
+
+# ============================
+# Keep resource files
+# ============================
+!src/main/resources/**
