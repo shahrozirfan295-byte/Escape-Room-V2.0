@@ -771,7 +771,7 @@ public class EscapeRoomGame
         void jump() {
             if (onGround) {
                 vy = PLAYER_JUMP_FORCE;
-                resourceManager.playSound("jump", 0.3);
+                resourceManager.playSound("jump", 0.2);
             }
         }
 
