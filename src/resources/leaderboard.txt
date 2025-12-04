@@ -1,18 +1,6 @@
 0xGhost	2000
 TEST	400
 Test	400
-Tst	400
 PlyrX	200
-Test	200
-Test	200
-Test	200
-Test	200
-test	200
-Test	100
-Test	100
-TEST	0
-TEst	0
-TEST	0
-Test	0
-Test	0
-Player	0
+
+
