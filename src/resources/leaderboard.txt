@@ -1,6 +1,8 @@
+Test	2900
 0xGhost	2000
 TEST	400
 Test	400
 PlyrX	200
-
-
+Test	200
+S	200
+Test	0
