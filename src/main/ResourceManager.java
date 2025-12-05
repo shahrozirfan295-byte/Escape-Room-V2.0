@@ -26,6 +26,7 @@ public class ResourceManager {
     
     private void loadImages() {
         // Background
+        loadImage("background2", "/images/background/background2.png");
         loadImage("background", "/images/background/background.png");
         
         // Player

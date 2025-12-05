@@ -20,7 +20,8 @@ public class GameController implements Initializable {
     private boolean navigatedToStartAfterGameOver = false;
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle resourceBundle) 
+    {
         game = new EscapeRoomGame();
         game.setPlayerName(playerName);
         
@@ -48,10 +49,11 @@ public class GameController implements Initializable {
                 game.render(gameCanvas.getGraphicsContext2D());
 
                  // On game over, return to the start / name input screen once
-                 if (game.isGameOver() && !navigatedToStartAfterGameOver) {
+                 if (game.isGameOver() && !navigatedToStartAfterGameOver) 
+                {
                      navigatedToStartAfterGameOver = true;
                      EsscapeRoomApp.showStartScene();
-                 }
+                }
             }
         };
         gameLoop.start();

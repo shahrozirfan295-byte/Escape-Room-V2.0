@@ -254,14 +254,31 @@ public class EscapeRoomGame
         // Goal placement
         goal = new Goal(1025, HEIGHT - 520);
     }
-    public void render(GraphicsContext gc) {
-        // Draw background
-        if (resourceManager.hasImage("background")) {
+    public void render(GraphicsContext gc) 
+    {
+    
+        if (resourceManager.hasImage("background") && level % 2 == 0) 
+        {
             gc.drawImage(resourceManager.getImage("background"), 0, 0, WIDTH, HEIGHT);
-        } else {
+        } 
+        else if (resourceManager.hasImage("background2") && level % 2 != 0) 
+        {
+            gc.drawImage(resourceManager.getImage("background2"), 0, 0, WIDTH, HEIGHT);
+            // System.out.println("DEBUG : Background image 2 naattt workingggg");
+        } 
+        else 
+        {
             gc.setFill(Color.rgb(200, 200, 200));
+            // System.out.println("DEBUG:::: IMAGES NOTTTT WORKINGGGGG"));
             gc.fillRect(0, 0, WIDTH, HEIGHT);
         }
+        // // Draw background
+        // if (resourceManager.hasImage("background")) {
+        //     gc.drawImage(resourceManager.getImage("background"), 0, 0, WIDTH, HEIGHT);
+        // } else {
+        //     gc.setFill(Color.rgb(200, 200, 200));
+        //     gc.fillRect(0, 0, WIDTH, HEIGHT);
+        // }
 
         // Draw platforms
         for (Platform p : platforms) {
@@ -365,9 +382,17 @@ public class EscapeRoomGame
         }
     }
 
-    private void drawUI(GraphicsContext gc) {
+    private void drawUI(GraphicsContext gc) 
+    {
         // Level info
-        gc.setFill(Color.BLACK);
+        if (level % 2 == 0) 
+        {
+            gc.setFill(Color.BLACK);
+        } 
+        else if (level % 2 != 0) 
+        {
+            gc.setFill(Color.WHITE);
+        } 
         gc.setFont(Font.font("Arial", FontWeight.BOLD, 24));
         gc.fillText("Level: " + level, 20, 30);
 
@@ -392,7 +417,14 @@ public class EscapeRoomGame
 
         // Lives indicator
         gc.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        gc.setFill(Color.BLACK);
+        if (level % 2 == 0) 
+        {
+            gc.setFill(Color.BLACK);
+        } 
+        else if (level % 2 != 0) 
+        {
+            gc.setFill(Color.WHITE);
+        } 
         gc.fillText("Lives:", 20, 125);
         for (int i = 0; i < MAX_LIVES; i++) {
             double heartX = 90 + i * 28;
@@ -409,12 +441,19 @@ public class EscapeRoomGame
         String[] colorNames = {"RED: Fire", "BLUE: Ice/Water", "YELLOW: Electric", "PURPLE: Shield"};
         String[] colorKeys = {"red", "blue", "yellow", "purple"};
 
-        for (int i = 0; i < colorNames.length; i++) {
+        for (int i = 0; i < colorNames.length; i++) 
+        {
             gc.setFill(getColorFromString(colorKeys[i]));
             gc.fillRect(20, 150 + i * 25, 20, 20);
-            gc.setStroke(Color.BLACK);
-            gc.strokeRect(20, 150 + i * 25, 20, 20);
+            if (level % 2 == 0) 
             gc.setFill(Color.BLACK);
+            else 
+            gc.setFill(Color.WHITE);
+            gc.strokeRect(20, 150 + i * 25, 20, 20);
+            if (level % 2 == 0) 
+            gc.setFill(Color.BLACK);
+            else 
+            gc.setFill(Color.WHITE);
             gc.fillText(colorNames[i], 45, 165 + i * 25);
         }
     }
@@ -900,11 +939,20 @@ public class EscapeRoomGame
             }
         }
 
-        void takeDamage(int damage, String damageType) {
-            // Type advantages
-            if ((type.equals("fire") && damageType.equals("ice")) ||
-                    (type.equals("ice") && damageType.equals("fire")) ||
-                    (type.equals("electric") && damageType.equals("ice"))) {
+        /*
+        DAMAGE :
+
+        fire     + ice       = 2x damage
+        ice      + fire      = 2x damage
+        ice      + electric  = 2x damage
+        else                 = normal damage
+        */
+        
+
+        void takeDamage(int damage, String damageType) 
+        {
+            if ((type.equals("fire") && damageType.equals("ice")) || (type.equals("ice") && damageType.equals("fire")) || (type.equals("electric") && damageType.equals("ice"))) 
+            {
                 damage *= 2;
             }
             health -= damage;

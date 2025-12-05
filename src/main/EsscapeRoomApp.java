@@ -24,7 +24,8 @@ public class EsscapeRoomApp extends Application
     private static EsscapeRoomApp instance;
     private static Stage primaryStage;
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException 
+    {
         instance = this;
         primaryStage = stage;
 
