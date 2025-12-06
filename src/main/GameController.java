@@ -8,9 +8,12 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-public class GameController implements Initializable {
+public class GameController implements Initializable 
+{
     @FXML
     private Canvas gameCanvas;
+    private long lastPowerTime = 0;
+    private static final long POWER_COOLDOWN = 800_000_000; // 0.8 seconds in nanoseconds
 
     private EscapeRoomGame game;
     private AnimationTimer gameLoop;
@@ -87,9 +90,17 @@ public class GameController implements Initializable {
                         game.level++;
                         game.initLevel();
                     }
-                } else {
-                    if (!game.isGameOver()) {
-                        game.player.usePower();
+                } else 
+                {
+                    if (!game.isGameOver()) 
+                    {
+                        long now = System.nanoTime();
+
+                        if (now - lastPowerTime >= POWER_COOLDOWN) 
+                        {
+                            game.player.usePower();
+                            lastPowerTime = now;
+                        }
                     }
                 }
                 break;

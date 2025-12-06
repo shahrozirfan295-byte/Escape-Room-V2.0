@@ -84,7 +84,8 @@ public class EscapeRoomGame
         initLevel();
     }
 
-    public void initLevel() {
+    public void initLevel() 
+    {
         player = new Player(100, HEIGHT - 150);
         coloredBlocks = new ArrayList<>();
         enemies = new ArrayList<>();
@@ -104,7 +105,8 @@ public class EscapeRoomGame
 
         
 
-        switch (level) {
+        switch (level) 
+        {
             case 1:
                 createLevel1();
                 break;
@@ -841,7 +843,8 @@ public class EscapeRoomGame
                 hasShield = true;
                 currentColor = "";
                 resourceManager.playSound("shield_activate", 0.6);
-            } else {
+            } else 
+            {
                 shoot();
             }
         }
