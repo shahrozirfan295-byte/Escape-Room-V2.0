@@ -83,6 +83,9 @@ public class EsscapeRoomApp extends Application
         scene.getStylesheets().add(
                 getClass().getResource("/splash.css").toExternalForm()
         );
+
+        ResourceManager rc = ResourceManager.getInstance();
+        rc.playSound("background_music", 0.1);
         return scene;
     }
 

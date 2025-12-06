@@ -1,2 +1,8 @@
 Test	2900
 0xGhost	2000
+Test	1600
+Test	600
+Test	0
+w	0
+w	0
+Test	0

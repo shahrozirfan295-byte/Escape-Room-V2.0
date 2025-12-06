@@ -71,7 +71,8 @@ public class EscapeRoomGame
     private static final String LEADERBOARD_FILE =
             "src" + File.separator + "resources" + File.separator + "leaderboard.txt";
 
-    public EscapeRoomGame() {
+    public EscapeRoomGame() 
+    {
         random = new Random();
         level = 1;
         gameWon = false;
@@ -79,7 +80,7 @@ public class EscapeRoomGame
         lives = MAX_LIVES;
         gameOver = false;
         gameOverTimer = 0;
-        resourceManager.playSound("background_music", 0.1);
+        // resourceManager.playSound("background_music", 0.1);
         initLevel();
     }
 
@@ -237,7 +238,7 @@ public class EscapeRoomGame
         coloredBlocks.add(new ColoredBlock(160, HEIGHT - 180, 50, 50, "red"));
         coloredBlocks.add(new ColoredBlock(235, HEIGHT - 510, 50, 50, "yellow"));
         coloredBlocks.add(new ColoredBlock(350, HEIGHT - 410, 50, 50, "blue"));
-        coloredBlocks.add(new ColoredBlock(620, HEIGHT - 320, 50, 50, "green"));
+        coloredBlocks.add(new ColoredBlock(160, HEIGHT - 280, 50, 50, "red"));
         coloredBlocks.add(new ColoredBlock(780, HEIGHT - 360, 50, 50, "purple"));
         
         // Enemy placement - total 10 enemies
