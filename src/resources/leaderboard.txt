@@ -1,13 +1,2 @@
 Test	2900
 0xGhost	2000
-Test	800
-Test	500
-TEST	400
-Test	400
-PlyrX	200
-Test	200
-S	200
-LET	200
-Test	200
-Test	0
-test	0

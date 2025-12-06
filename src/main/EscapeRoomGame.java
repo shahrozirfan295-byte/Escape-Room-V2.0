@@ -35,7 +35,8 @@ public class EscapeRoomGame
         public final String name;
         public final int score;
 
-        public LeaderboardEntry(String name, int score) {
+        public LeaderboardEntry(String name, int score)
+        {
             this.name = name;
             this.score = score;
         }
@@ -264,14 +265,12 @@ public class EscapeRoomGame
         else if (resourceManager.hasImage("background2") && level % 2 != 0) 
         {
             gc.drawImage(resourceManager.getImage("background2"), 0, 0, WIDTH, HEIGHT);
-            // System.out.println("DEBUG : Background image 2 naattt workingggg");
         } 
-        else 
-        {
-            gc.setFill(Color.rgb(200, 200, 200));
-            // System.out.println("DEBUG:::: IMAGES NOTTTT WORKINGGGGG"));
-            gc.fillRect(0, 0, WIDTH, HEIGHT);
-        }
+        // else 
+        // {
+        //     gc.setFill(Color.rgb(200, 200, 200));
+        //     gc.fillRect(0, 0, WIDTH, HEIGHT);
+        // }
         // // Draw background
         // if (resourceManager.hasImage("background")) {
         //     gc.drawImage(resourceManager.getImage("background"), 0, 0, WIDTH, HEIGHT);
@@ -315,7 +314,8 @@ public class EscapeRoomGame
         drawUI(gc);
 
         // Game state overlays
-        if (gameOver) {
+        if (gameOver) 
+        {
             gc.setFill(Color.rgb(0, 0, 0, 0.75));
             gc.fillRect(0, 0, WIDTH, HEIGHT);
             gc.setFill(Color.WHITE);
@@ -476,9 +476,9 @@ public class EscapeRoomGame
     }
 
     public void update() {
-        if (gameOver) {
-            // Freeze gameplay when game over; scene navigation back to the
-            // start screen is handled by the controller.
+        if (gameOver) 
+        {
+     
             return;
         }
 
@@ -486,8 +486,8 @@ public class EscapeRoomGame
 
         player.update(platforms);
 
-        // Water hazard: if player is in water, they sink and lose a life
-        if (isPlayerInWater()) {
+        if (isPlayerInWater())
+        {
             handlePlayerHit();
         }
 

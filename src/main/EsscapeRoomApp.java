@@ -1,10 +1,12 @@
+import java.io.IOException;
+import java.util.List;
+
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.animation.PauseTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -14,10 +16,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import java.io.IOException;
-import java.util.List;
 
 public class EsscapeRoomApp extends Application 
 {
@@ -134,8 +134,7 @@ public class EsscapeRoomApp extends Application
         lbTitle.setFont(Font.font("Arial", FontWeight.BOLD, 24));
         leaderboardBox.getChildren().add(lbTitle);
 
-        List<EscapeRoomGame.LeaderboardEntry> entries =
-                EscapeRoomGame.getLeaderboardSnapshot(5);
+        List<EscapeRoomGame.LeaderboardEntry> entries = EscapeRoomGame.getLeaderboardSnapshot(5);
         if (entries.isEmpty()) {
             Label none = new Label("No scores yet. Be the first!");
             none.setFont(Font.font("Arial", FontWeight.NORMAL, 18));
@@ -162,7 +161,7 @@ public class EsscapeRoomApp extends Application
         controlsBox.getChildren().add(makeControlLabel("W / Up Arrow – Jump"));
         controlsBox.getChildren().add(makeControlLabel("SPACE – Shoot / use power"));
         controlsBox.getChildren().add(makeControlLabel("E – Absorb nearby color"));
-        controlsBox.getChildren().add(makeControlLabel("SHIFT + L – Hidden bonus life"));
+        // controlsBox.getChildren().add(makeControlLabel("SHIFT + L – Hidden bonus life"));
 
         bottomBox.getChildren().addAll(leaderboardBox, controlsBox);
         root.setBottom(bottomBox);
