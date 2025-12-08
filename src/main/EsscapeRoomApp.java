@@ -16,17 +16,16 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class EsscapeRoomApp extends Application 
+public class EsscapeRoomApp extends Application
 {
     private static EsscapeRoomApp instance;
     private static Stage primaryStage;
+
     @Override
-    public void start(Stage stage) throws IOException 
+    public void start(Stage stage) throws IOException
     {
         instance = this;
         primaryStage = stage;
@@ -69,7 +68,15 @@ public class EsscapeRoomApp extends Application
 
         // Draw splash/start image
         ResourceManager rc = ResourceManager.getInstance();
-        gc.drawImage(rc.getImage("start"), 0, 0, 1200, 700);
+        if (rc.hasImage("start")) {
+            gc.drawImage(rc.getImage("start"), 0, 0, 1200, 700);
+        } else {
+            // Fallback if image missing
+            gc.setFill(javafx.scene.paint.Color.BLACK);
+            gc.fillRect(0,0, 1200, 700);
+            gc.setFill(javafx.scene.paint.Color.WHITE);
+            gc.fillText("Loading...", 600, 350);
+        }
 
         root.getChildren().add(canvas);
 
@@ -81,30 +88,34 @@ public class EsscapeRoomApp extends Application
         return scene;
     }
 
-
     private Scene buildStartScene(Stage stage) {
         BorderPane root = new BorderPane();
         root.setPrefSize(EscapeRoomGame.WIDTH, EscapeRoomGame.HEIGHT);
 
-        // Title at top
+        // --- TOP SECTION: TITLE ---
         Label title = new Label("Escape Room V2.0");
-        title.setFont(Font.font("Arial", FontWeight.BOLD, 36));
+        // Removed hardcoded setFont, using CSS class instead
+        title.getStyleClass().add("game-title");
+
         BorderPane.setAlignment(title, Pos.TOP_CENTER);
         BorderPane.setMargin(title, new Insets(20, 0, 10, 0));
         root.setTop(title);
 
-        // Center: name input and start button
-        VBox centerBox = new VBox(10);
+        // --- CENTER SECTION: INPUT & BUTTON ---
+        VBox centerBox = new VBox(15); // Increased spacing slightly
         centerBox.setAlignment(Pos.CENTER);
+
         Label nameLabel = new Label("Enter your name to begin:");
-        nameLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+        nameLabel.getStyleClass().add("prompt-label");
 
         TextField nameField = new TextField();
         nameField.setPromptText("Player");
         nameField.setMaxWidth(300);
+        nameField.getStyleClass().add("name-field");
 
         Button startButton = new Button("Start Game");
-        startButton.setFont(Font.font("Arial", FontWeight.BOLD, 18));
+        startButton.getStyleClass().add("start-button");
+
         startButton.setOnAction(e -> {
             String entered = nameField.getText();
             String playerName = (entered == null || entered.trim().isEmpty()) ? "Player" : entered.trim();
@@ -118,38 +129,40 @@ public class EsscapeRoomApp extends Application
         centerBox.getChildren().addAll(nameLabel, nameField, startButton);
         root.setCenter(centerBox);
 
-        // Bottom: leaderboard (left half) and controls (right half)
+        // --- BOTTOM SECTION: LEADERBOARD & CONTROLS ---
         HBox bottomBox = new HBox(60);
         bottomBox.setPadding(new Insets(20, 40, 40, 40));
         bottomBox.setAlignment(Pos.TOP_CENTER);
 
-        // Leaderboard
+        // Left Side: Leaderboard
         VBox leaderboardBox = new VBox(8);
         leaderboardBox.setAlignment(Pos.TOP_LEFT);
+
         Label lbTitle = new Label("Leaderboard");
-        lbTitle.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        lbTitle.getStyleClass().add("section-header");
         leaderboardBox.getChildren().add(lbTitle);
 
         List<EscapeRoomGame.LeaderboardEntry> entries = EscapeRoomGame.getLeaderboardSnapshot(5);
         if (entries.isEmpty()) {
             Label none = new Label("No scores yet. Be the first!");
-            none.setFont(Font.font("Arial", FontWeight.NORMAL, 18));
+            none.getStyleClass().add("list-text");
             leaderboardBox.getChildren().add(none);
         } else {
             int rank = 1;
             for (EscapeRoomGame.LeaderboardEntry entry : entries) {
                 Label line = new Label(rank + ". " + entry.name + " - " + entry.score);
-                line.setFont(Font.font("Arial", FontWeight.NORMAL, 18));
+                line.getStyleClass().add("list-text");
                 leaderboardBox.getChildren().add(line);
                 rank++;
             }
         }
 
-        // Controls on right half
+        // Right Side: Controls
         VBox controlsBox = new VBox(6);
         controlsBox.setAlignment(Pos.TOP_LEFT);
+
         Label controlsTitle = new Label("Controls");
-        controlsTitle.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        controlsTitle.getStyleClass().add("section-header");
         controlsBox.getChildren().add(controlsTitle);
 
         controlsBox.getChildren().add(makeControlLabel("A / Left Arrow – Move left"));
@@ -162,17 +175,31 @@ public class EsscapeRoomApp extends Application
         bottomBox.getChildren().addAll(leaderboardBox, controlsBox);
         root.setBottom(bottomBox);
 
-        return new Scene(root, EscapeRoomGame.WIDTH, EscapeRoomGame.HEIGHT);
+        Scene scene = new Scene(root, EscapeRoomGame.WIDTH, EscapeRoomGame.HEIGHT);
+
+        // --- LINK CSS FILE ---
+        try {
+            // Looks for style.css in the resources folder
+            String css = getClass().getResource("/style.css").toExternalForm();
+            scene.getStylesheets().add(css);
+        } catch (Exception e) {
+            System.out.println("Could not load style.css. Ensure it is in the resources folder.");
+        }
+
+        return scene;
     }
 
     private Label makeControlLabel(String text) {
         Label label = new Label(text);
-        label.setFont(Font.font("Arial", FontWeight.NORMAL, 18));
+        // Use CSS class instead of hardcoded font
+        label.getStyleClass().add("list-text");
         return label;
     }
 
     private void startGame(Stage stage, String playerName) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(EsscapeRoomApp.class.getResource("/game.fxml"));
+        // Note: You might want to add CSS to the game scene too if needed,
+        // by modifying the FXML or adding stylesheets to the loaded scene here.
         Scene scene = new Scene(fxmlLoader.load(), EscapeRoomGame.WIDTH, EscapeRoomGame.HEIGHT);
 
         // Inject player name into controller
@@ -182,10 +209,11 @@ public class EsscapeRoomApp extends Application
         }
 
         stage.setScene(scene);
+        // Ensure game canvas gets focus
+        scene.getRoot().requestFocus();
     }
 
     public static void main(String[] args) {
         launch();
     }
 }
-
