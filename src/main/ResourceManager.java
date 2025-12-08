@@ -24,7 +24,11 @@ public class ResourceManager {
         return instance;
     }
     
-    private void loadImages() {
+    private void loadImages()
+    {
+        //Start Image
+
+        loadImage("start","/images/start/start.png");
         // Background
         loadImage("background2", "/images/background/background2.png");
         loadImage("background", "/images/background/background.png");

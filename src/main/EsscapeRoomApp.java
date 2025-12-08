@@ -7,6 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -40,7 +42,7 @@ public class EsscapeRoomApp extends Application
         stage.setScene(splashScene);
         stage.show();
 
-        PauseTransition delay = new PauseTransition(Duration.seconds(2.5));
+        PauseTransition delay = new PauseTransition(Duration.seconds(5));
         delay.setOnFinished(e -> {
             Scene startScene = buildStartScene(stage);
             stage.setScene(startScene);
@@ -56,38 +58,29 @@ public class EsscapeRoomApp extends Application
         primaryStage.setScene(startScene);
     }
 
-    private Scene buildSplashScene(Stage stage) 
+    private Scene buildSplashScene(Stage stage)
     {
         StackPane root = new StackPane();
         root.setPrefSize(EscapeRoomGame.WIDTH, EscapeRoomGame.HEIGHT);
 
-        VBox box = new VBox(10);
-        box.setAlignment(Pos.CENTER);
+        // Canvas for drawing the splash screen image
+        Canvas canvas = new Canvas(EscapeRoomGame.WIDTH, EscapeRoomGame.HEIGHT);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        Label title = new Label("Escape Room V2.0");
-        title.setFont(Font.font("Arial", FontWeight.BOLD, 40));
+        // Draw splash/start image
+        ResourceManager rc = ResourceManager.getInstance();
+        gc.drawImage(rc.getImage("start"), 0, 0, 1200, 700);
 
-        Label subtitle = new Label("This time with multiple rooms");
-        subtitle.setFont(Font.font("Arial", FontWeight.NORMAL, 22));
-
-        box.getChildren().addAll(title, subtitle);
-        root.getChildren().add(box);
-
-        // Add style classes for CSS
-        root.getStyleClass().add("splash-root");
-        title.getStyleClass().add("splash-title");
-        subtitle.getStyleClass().add("splash-subtitle");
+        root.getChildren().add(canvas);
 
         Scene scene = new Scene(root, EscapeRoomGame.WIDTH, EscapeRoomGame.HEIGHT);
-        // Attach stylesheet for the splash screen (splash.css is under src/main/resources).
-        scene.getStylesheets().add(
-                getClass().getResource("/splash.css").toExternalForm()
-        );
 
-        ResourceManager rc = ResourceManager.getInstance();
+        // Play background audio
         rc.playSound("background_music", 0.1);
+
         return scene;
     }
+
 
     private Scene buildStartScene(Stage stage) {
         BorderPane root = new BorderPane();

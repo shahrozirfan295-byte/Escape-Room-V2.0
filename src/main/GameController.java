@@ -13,7 +13,7 @@ public class GameController implements Initializable
     @FXML
     private Canvas gameCanvas;
     private long lastPowerTime = 0;
-    private static final long POWER_COOLDOWN = 800_000_000; // 0.8 seconds in nanoseconds
+    private static final long POWER_COOLDOWN = 500_000_000; 
 
     private EscapeRoomGame game;
     private AnimationTimer gameLoop;

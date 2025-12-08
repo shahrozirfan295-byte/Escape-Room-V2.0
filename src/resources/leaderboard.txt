@@ -1,12 +1,1 @@
-Test	2900
-0xGhost	2000
-Test	1600
-Test	600
-Test	100
-Test	0
-w	0
-w	0
-Test	0
-Test	0
-a	0
-test	0
+0xGhost	63000
