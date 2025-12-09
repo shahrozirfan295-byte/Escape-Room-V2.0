@@ -22,18 +22,29 @@ public class GameController implements Initializable
     private String playerName = "Player";
     private boolean navigatedToStartAfterGameOver = false;
 
+    // In GameController.java
+
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) 
+    public void initialize(URL url, ResourceBundle resourceBundle)
     {
         game = new EscapeRoomGame();
         game.setPlayerName(playerName);
-        
-        // Setup key handlers
+
+        // --- FIX STARTS HERE ---
+        // Instead of trusting the Canvas to keep focus, we wait for the Scene to load
+        // and attach the key listeners to the WHOLE SCENE.
+        gameCanvas.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                newScene.setOnKeyPressed(this::handleKeyPressed);
+                newScene.setOnKeyReleased(this::handleKeyReleased);
+            }
+        });
+
+        // Optional: Allow clicking the canvas to ensure it's active (backup)
         gameCanvas.setFocusTraversable(true);
+        gameCanvas.setOnMouseClicked(e -> gameCanvas.requestFocus());
         gameCanvas.requestFocus();
-        
-        gameCanvas.setOnKeyPressed(this::handleKeyPressed);
-        gameCanvas.setOnKeyReleased(this::handleKeyReleased);
+        // --- FIX ENDS HERE ---
 
         // Game loop
         gameLoop = new AnimationTimer() {
@@ -44,18 +55,18 @@ public class GameController implements Initializable
                     if (aPressed) game.player.moveLeft();
                     if (dPressed) game.player.moveRight();
                 }
-                
+
                 // Update game
                 game.update();
-                
+
                 // Render
                 game.render(gameCanvas.getGraphicsContext2D());
 
-                 // On game over, return to the start / name input screen once
-                 if (game.isGameOver() && !navigatedToStartAfterGameOver) 
+                // On game over, return to the start / name input screen once
+                if (game.isGameOver() && !navigatedToStartAfterGameOver)
                 {
-                     navigatedToStartAfterGameOver = true;
-                     EsscapeRoomApp.showStartScene();
+                    navigatedToStartAfterGameOver = true;
+                    EsscapeRoomApp.showStartScene();
                 }
             }
         };
